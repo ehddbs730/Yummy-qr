@@ -1,0 +1,246 @@
+/* 모달 스타일 */
+.menu-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.menu-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.menu-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
+  border-radius: 16px 16px 0 0;
+}
+
+.menu-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #6b5ace;
+  margin: 0;
+}
+
+.menu-modal-close {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.menu-modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.menu-modal-form {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-modal-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-modal-form-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b5ace;
+}
+
+.menu-modal-form-input,
+.menu-modal-form-select {
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.menu-modal-form-input:focus,
+.menu-modal-form-select:focus {
+  outline: none;
+  border-color: #6b5ace;
+}
+
+.menu-modal-checkbox-group {
+  display: flex;
+  margin-top: 8px;
+}
+
+.menu-modal-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: #6b5ace;
+  cursor: pointer;
+}
+
+.menu-modal-checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #6b5ace;
+}
+
+/* 이미지 업로드 스타일 */
+.menu-modal-image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-modal-file-input {
+  display: none;
+}
+
+.menu-modal-file-label {
+  display: inline-block;
+  background: #f8f9fa;
+  color: #6b5ace;
+  border: 2px dashed #6b5ace;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.menu-modal-file-label:hover {
+  background: #f3f1ff;
+  border-color: #5a4ab8;
+}
+
+.menu-modal-image-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f8f9fa;
+  border: 2px solid #ddd;
+}
+
+.menu-modal-image-preview img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.menu-modal-remove-image {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.menu-modal-remove-image:hover {
+  background: rgba(255, 0, 0, 1);
+  transform: scale(1.1);
+}
+
+.menu-modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.menu-modal-cancel-btn {
+  flex: 1;
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-modal-cancel-btn:hover {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.menu-modal-submit-btn {
+  flex: 1;
+  background: #6b5ace;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.menu-modal-submit-btn:hover {
+  background: #5a4ab8;
+  transform: translateY(-1px);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .menu-modal {
+    width: 95%;
+    margin: 20px;
+  }
+  
+  .menu-modal-header {
+    padding: 15px 20px;
+  }
+  
+  .menu-modal-form {
+    padding: 20px;
+  }
+}

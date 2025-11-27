@@ -1,0 +1,312 @@
+body, html, #root {
+  background: #ffffff;
+}
+
+.admin-menu-manage-container {
+  max-width: 1200px;
+  margin: 0px auto 0 auto;
+  padding: 40px;
+  min-height: 100vh;
+}
+
+.admin-menu-manage-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.admin-menu-manage-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+}
+
+.admin-menu-manage-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin: 0;
+}
+
+.admin-menu-manage-content {
+  margin-bottom: 40px;
+}
+
+/* 버튼 그룹 */
+.admin-menu-button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  position: relative;
+}
+
+.admin-menu-button-group::before {
+  content: '';
+  flex: 1;
+  order: 1;
+}
+
+.admin-menu-button-group::after {
+  content: '';
+  flex: 1;
+  order: 3;
+}
+
+.admin-menu-add-btn {
+  background: #6b5ace;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(107, 90, 206, 0.3);
+}
+
+.admin-menu-status-header .admin-menu-add-btn {
+  position: absolute;
+  right: 0;
+}
+
+.admin-menu-add-btn:hover {
+  background: #5a4ab8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(107, 90, 206, 0.4);
+}
+
+.admin-menu-confirm-btn {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+  order: 4;
+}
+
+.admin-menu-confirm-btn:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(40, 167, 69, 0.4);
+}
+
+/* 메뉴 현황 섹션 */
+.admin-menu-status-section {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.admin-menu-status-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.admin-menu-status-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.admin-menu-table-container {
+  overflow-x: auto;
+}
+
+.admin-menu-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.admin-menu-table th {
+  background: #6b5ace;
+  color: #fff;
+  padding: 12px 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-menu-table td {
+  padding: 12px 8px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.admin-menu-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+.admin-menu-delete-btn {
+  background: #ff4757;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.admin-menu-delete-btn:hover {
+  background: #ff3742;
+}
+
+/* 조회 버튼 */
+.admin-menu-view-btn {
+  background: #e3f2fd;
+  color: #1976d2;
+  border: 2px solid #2196f3;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.admin-menu-view-btn:hover {
+  background: #2196f3;
+  color: #fff;
+}
+
+/* 수정 버튼 */
+.admin-menu-edit-btn {
+  background: #f3f1ff;
+  color: #5a4ab8;
+  border: 2px solid #6b5ace;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.admin-menu-edit-btn:hover {
+  background: #6b5ace;
+  color: #fff;
+}
+
+/* visible 토글 버튼 */
+.admin-menu-toggle-btn {
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 60px;
+}
+
+.admin-menu-toggle-btn.visible {
+  background: #28a745;
+  color: #fff;
+}
+
+.admin-menu-toggle-btn.hidden {
+  background: #6c757d;
+  color: #fff;
+}
+
+.admin-menu-toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.admin-menu-back-btn {
+  background: #f3f1ff;
+  color: #6b5ace;
+  border: 2px solid #6b5ace;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  order: 0;
+}
+
+.admin-menu-back-btn:hover {
+  background: #6b5ace;
+  color: #fff;
+}
+
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .admin-menu-manage-container {
+    padding: 20px;
+  }
+  
+  .admin-menu-manage-title {
+    font-size: 2rem;
+  }
+  
+  .admin-menu-manage-subtitle {
+    font-size: 1rem;
+  }
+  
+  .admin-menu-status-section {
+    padding: 20px;
+  }
+  
+  .admin-menu-status-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .admin-menu-status-header .admin-menu-add-btn {
+    position: static;
+  }
+  
+  .admin-menu-status-title {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+  
+  .admin-menu-button-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .admin-menu-add-btn,
+  .admin-menu-confirm-btn,
+  .admin-menu-back-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+  
+  
+  .admin-menu-table {
+    font-size: 0.8rem;
+  }
+  
+  .admin-menu-table th,
+  .admin-menu-table td {
+    padding: 8px 4px;
+  }
+  
+  .admin-menu-checkbox-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

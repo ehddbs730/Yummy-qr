@@ -1,0 +1,388 @@
+/* 모달 오버레이 */
+.menu-detail-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+/* 모달 컨테이너 */
+.menu-detail-modal-container {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 모달 헤더 */
+.menu-detail-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 30px 15px 30px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.menu-detail-modal-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.menu-detail-modal-close {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.menu-detail-modal-close:hover {
+  background-color: #f3f4f6;
+  color: #374151;
+}
+
+/* 모달 컨텐츠 */
+.menu-detail-modal-content {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.menu-detail-modal-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  text-align: center;
+}
+
+.menu-detail-modal-main {
+  display: flex;
+  gap: 25px;
+  align-items: stretch;
+  min-height: 350px;
+}
+
+/* 정보 카드 컨테이너 */
+.menu-info-cards-container {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 개별 정보 카드 */
+.menu-info-card {
+  border-radius: 12px;
+  padding: 25px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  border: 1px solid #e5e7eb;
+  background: white;
+}
+
+.tickets-card {
+  background: #f8fafc;
+  border-color: #d1d5db;
+}
+
+.price-card {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.menu-info-label {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #6b7280;
+}
+
+.menu-info-value {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* 차트 섹션 */
+.menu-chart-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 25px;
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-container {
+  background: transparent;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.chart-graph {
+  height: 250px;
+  width: 100%;
+}
+
+.wait-time-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 30px;
+  background: white;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.menu-chart-placeholder {
+  background: white;
+  border-radius: 8px;
+  padding: 30px;
+  border: 2px dashed #ddd;
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-chart-text {
+  color: #999;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* 버튼 영역 */
+.menu-detail-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.menu-detail-back-btn {
+  background: white;
+  color: #6b5ace;
+  border: 2px solid #6b5ace;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.menu-detail-back-btn:hover {
+  background: #6b5ace;
+  color: white;
+}
+
+.menu-detail-purchase-btn {
+  background: #6b5ace;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.menu-detail-purchase-btn:hover {
+  background: #5a4ab8;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .menu-detail-modal-overlay {
+    padding: 10px;
+  }
+  
+  .menu-detail-modal-container {
+    max-height: 95vh;
+  }
+  
+  .menu-detail-modal-header {
+    padding: 20px 20px 15px 20px;
+  }
+  
+  .menu-detail-modal-title {
+    font-size: 1.6rem;
+  }
+  
+  .menu-detail-modal-close {
+    font-size: 2rem;
+    width: 35px;
+    height: 35px;
+  }
+  
+  .menu-detail-modal-content {
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .menu-detail-modal-name {
+    font-size: 1.6rem;
+  }
+  
+  .menu-detail-modal-main {
+    flex-direction: column;
+    gap: 20px;
+    min-height: auto;
+  }
+  
+  .menu-info-cards-container {
+    width: 100%;
+    flex-direction: row;
+    gap: 15px;
+  }
+  
+  .menu-info-card {
+    padding: 20px 15px;
+    min-height: 100px;
+  }
+  
+  .menu-info-label {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  
+  .menu-info-value {
+    font-size: 1.4rem;
+  }
+  
+  .menu-chart-section {
+    width: 100%;
+    padding: 20px;
+    min-height: 150px;
+  }
+  
+  .menu-chart-placeholder {
+    padding: 20px;
+    min-height: 120px;
+  }
+  
+  .menu-chart-text {
+    font-size: 1rem;
+  }
+  
+  .menu-detail-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .menu-detail-back-btn,
+  .menu-detail-purchase-btn {
+    width: 100%;
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-detail-modal-header {
+    padding: 15px 15px 10px 15px;
+  }
+  
+  .menu-detail-modal-title {
+    font-size: 1.4rem;
+  }
+  
+  .menu-detail-modal-content {
+    padding: 15px;
+  }
+  
+  .menu-detail-modal-name {
+    font-size: 1.4rem;
+  }
+  
+  .menu-info-cards-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .menu-info-card {
+    padding: 18px 12px;
+    min-height: 90px;
+  }
+  
+  .menu-info-value {
+    font-size: 1.2rem;
+  }
+  
+  .menu-chart-section {
+    padding: 15px;
+    min-height: 130px;
+  }
+  
+  .menu-chart-placeholder {
+    padding: 15px;
+    min-height: 100px;
+  }
+}
+
+.wait-time-label {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.wait-time-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.wait-time-na {
+  font-size: 18px;
+  color: #adb5bd;
+}

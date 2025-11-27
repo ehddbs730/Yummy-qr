@@ -1,0 +1,580 @@
+/* 키오스크 메뉴 페이지 스타일 - 보라색 톤 */
+.kiosk-menu-container {
+  max-width: 1000px;
+  margin: 40px auto 40px auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 20px;
+  min-height: 500px;
+  font-family: "Arial", sans-serif;
+}
+
+/* 헤더 */
+.kiosk-header {
+  background: #6b5ace;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(107, 90, 206, 0.2);
+  border-radius: 15px 15px 0 0;
+  margin: -30px -20px 20px -20px;
+}
+
+.restaurant-name h1 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.kiosk-back-btn {
+  background: #fff;
+  border: 2px solid #6b5ace;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+  color: #6b5ace;
+}
+
+.kiosk-back-btn:hover {
+  background: #f3f1ff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(107, 90, 206, 0.2);
+}
+
+.kiosk-back-icon {
+  font-size: 1.2rem;
+}
+
+/* 카테고리 탭 */
+.kiosk-category-tabs {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.kiosk-category-tab {
+  background: #fff;
+  border: 2px solid #dee2e6;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #495057;
+}
+
+.kiosk-category-tab:hover {
+  background: #f3f1ff;
+  border-color: #6b5ace;
+}
+
+.kiosk-category-tab.active {
+  background: #6b5ace;
+  border-color: #6b5ace;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(107, 90, 206, 0.3);
+}
+
+/* 메뉴 콘텐츠 */
+.kiosk-menu-content {
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.kiosk-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin: 0 auto;
+}
+
+.kiosk-menu-item {
+  background: #fff;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.kiosk-menu-item:hover {
+  border-color: #6b5ace;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(107, 90, 206, 0.2);
+}
+
+.kiosk-menu-image {
+  width: 100%;
+  height: 120px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border: 1px solid #dee2e6;
+}
+
+.kiosk-menu-image-placeholder {
+  color: #6c757d;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.kiosk-menu-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.kiosk-menu-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.kiosk-menu-price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* 주문 요약 */
+.kiosk-order-summary {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #f3f1ff;
+  margin-bottom: 20px;
+}
+
+.order-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f3f1ff;
+}
+
+.summary-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.summary-quantity {
+  color: #495057;
+}
+
+.summary-amount {
+  color: #333;
+}
+
+.summary-list {
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.empty-order {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.1rem;
+  padding: 40px 0;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f3f4;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.item-name {
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.item-quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 15px;
+}
+
+.quantity-btn {
+  background: none;
+  color: #28a745;
+  border: 1px solid #28a745;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background: #28a745;
+  color: #fff;
+  transform: none;
+}
+
+.quantity-btn:active {
+  transform: none;
+}
+
+.decrease-btn {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.decrease-btn:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+.item-quantity {
+  color: #495057;
+  font-weight: 600;
+  font-size: 1rem;
+  min-width: 20px;
+  text-align: center;
+}
+
+.item-price {
+  color: #333;
+  font-weight: 600;
+  min-width: 100px;
+  text-align: right;
+}
+
+/* 액션 바 */
+.kiosk-action-bar {
+  background: #343a40;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.kiosk-cancel-btn,
+.kiosk-checkout-btn {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.kiosk-cancel-btn {
+  background: #6c757d;
+  color: #fff;
+}
+
+.kiosk-cancel-btn:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.kiosk-checkout-btn {
+  background: #6b5ace;
+  color: #fff;
+}
+
+.kiosk-checkout-btn:hover {
+  background: #5a4ab8;
+  transform: translateY(-2px);
+}
+
+.kiosk-checkout-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* 안내 문구 */
+.kiosk-instruction {
+  text-align: center;
+  color: #6c757d;
+  font-size: 0.8rem;
+  padding: 10px 20px 20px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+  .kiosk-menu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .kiosk-menu-content {
+    padding: 15px;
+  }
+
+  .kiosk-order-summary {
+    padding: 15px;
+  }
+
+  .kiosk-action-bar {
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .kiosk-menu-container {
+    margin: 20px auto 0 auto;
+    padding: 20px 15px;
+  }
+
+  .kiosk-header {
+    padding: 8px 15px;
+    margin: -20px -15px 15px -15px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .restaurant-name h1 {
+    font-size: 1.2rem;
+  }
+
+  .kiosk-back-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .kiosk-category-tabs {
+    padding: 10px 15px;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .kiosk-category-tab {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 15px;
+  }
+
+  .kiosk-menu-content {
+    padding: 15px;
+  }
+
+  .kiosk-menu-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .kiosk-menu-item {
+    padding: 12px;
+  }
+
+  .kiosk-menu-image {
+    height: 80px;
+    margin-bottom: 8px;
+  }
+
+  .kiosk-menu-name {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .kiosk-menu-price {
+    font-size: 1rem;
+  }
+
+  .kiosk-order-summary {
+    padding: 15px;
+  }
+
+  .order-summary-header {
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .summary-title {
+    font-size: 1.1rem;
+  }
+
+  .summary-stats {
+    gap: 12px;
+    font-size: 0.9rem;
+  }
+
+  .summary-list {
+    min-height: 60px;
+    max-height: 120px;
+  }
+
+  .kiosk-action-bar {
+    padding: 12px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .kiosk-cancel-btn,
+  .kiosk-checkout-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+
+  .kiosk-instruction {
+    padding: 8px 15px 15px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .kiosk-menu-container {
+    margin: 15px auto 0 auto;
+    padding: 15px 10px;
+  }
+
+  .kiosk-header {
+    padding: 6px 10px;
+    margin: -15px -10px 10px -10px;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .restaurant-name h1 {
+    font-size: 1rem;
+  }
+
+  .kiosk-back-btn {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+
+  .kiosk-category-tabs {
+    padding: 8px 10px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 4px;
+  }
+
+  .kiosk-category-tab {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .kiosk-menu-content {
+    padding: 10px;
+  }
+
+  .kiosk-menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .kiosk-menu-item {
+    padding: 8px;
+  }
+
+  .kiosk-menu-image {
+    height: 60px;
+    margin-bottom: 6px;
+  }
+
+  .kiosk-menu-name {
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+  }
+
+  .kiosk-menu-price {
+    font-size: 0.9rem;
+  }
+
+  .kiosk-order-summary {
+    padding: 10px;
+  }
+
+  .summary-title {
+    font-size: 1rem;
+  }
+
+  .summary-stats {
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .kiosk-action-bar {
+    padding: 8px;
+  }
+
+  .kiosk-cancel-btn,
+  .kiosk-checkout-btn {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .item-quantity-controls {
+    gap: 6px;
+    margin: 0 10px;
+  }
+
+  .quantity-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.9rem;
+  }
+
+  .item-quantity {
+    font-size: 0.9rem;
+  }
+}

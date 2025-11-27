@@ -1,0 +1,185 @@
+/* SocialSignUpPhone.jsx 스타일 */
+.social-phone-layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.social-phone-left {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.social-phone-logo-image {
+  max-width: 300px;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.social-phone-right {
+  flex: 1;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.social-phone-form-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.social-phone-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.social-phone-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.social-phone-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.social-phone-description {
+  font-size: 0.9rem;
+  color: #888;
+  line-height: 1.4;
+}
+
+.social-phone-form {
+  width: 100%;
+}
+
+.social-phone-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.social-phone-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.social-phone-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.social-phone-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-phone-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-phone-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.social-phone-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* 에러 메시지 스타일 */
+.social-phone-error {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .social-phone-layout {
+    flex-direction: column;
+  }
+
+  .social-phone-left {
+    flex: 0 0 auto;
+    height: 200px;
+    padding: 1rem;
+  }
+
+  .social-phone-logo-image {
+    max-width: 150px;
+    max-height: 150px;
+  }
+
+  .social-phone-right {
+    flex: 1;
+    padding: 1rem;
+  }
+
+  .social-phone-form-container {
+    padding: 1rem;
+  }
+
+  .social-phone-title {
+    font-size: 1.5rem;
+  }
+
+  .social-phone-subtitle {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .social-phone-left {
+    height: 150px;
+  }
+
+  .social-phone-logo-image {
+    max-width: 120px;
+    max-height: 120px;
+  }
+
+  .social-phone-title {
+    font-size: 1.3rem;
+  }
+
+  .social-phone-form-container {
+    padding: 0.5rem;
+  }
+}

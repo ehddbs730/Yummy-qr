@@ -1,0 +1,70 @@
+/* 인기 메뉴 정보 배너 */
+.popular-menu-banner {
+  background: linear-gradient(135deg, #6b5ace 0%, #8693f1 100%);
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(107, 90, 206, 0.2);
+}
+
+.popular-menu-icon {
+  background: #6b5ace;
+  color: #fff;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+
+.popular-menu-text {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .popular-menu-banner {
+    padding: 12px 15px;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .popular-menu-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 0.9rem;
+  }
+
+  .popular-menu-text {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .popular-menu-banner {
+    padding: 10px 12px;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .popular-menu-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 0.8rem;
+  }
+
+  .popular-menu-text {
+    font-size: 0.8rem;
+  }
+}

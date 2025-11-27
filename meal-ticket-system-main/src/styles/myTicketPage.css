@@ -1,0 +1,193 @@
+body, html, #root {
+  background: #fff;
+}
+
+.my-ticket-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my-ticket-title {
+  font-size: 38px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.ticket-tab-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ticket-tab-slider {
+  display: inline-flex;
+  background: #f0f0f0;
+  border-radius: 30px;
+  padding: 4px;
+  gap: 4px;
+  position: relative;
+}
+
+.ticket-tab-slider::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(50% - 6px);
+  height: calc(100% - 8px);
+  background: #4b5ae4;
+  border-radius: 26px;
+  transition: transform 0.3s ease;
+  z-index: 0;
+  box-shadow: 0 2px 8px rgba(75, 90, 228, 0.3);
+}
+
+.ticket-tab-slider.active-1::before {
+  transform: translateX(calc(100% + 8px));
+}
+
+.ticket-tab-btn {
+  padding: 12px 32px;
+  border: none;
+  border-radius: 26px;
+  background: transparent;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+}
+
+.ticket-tab-btn.active {
+  background: transparent;
+  color: white;
+  box-shadow: none;
+}
+
+.ticket-tab-btn:hover:not(.active) {
+  background: #e0e0e0;
+}
+
+.ticket-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 350px);
+  gap: 24px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 800px;
+  justify-content: center;
+}
+
+.ticket-empty {
+  background: #fff;
+  border: 1px dashed #bcd2ee;
+  color: #6c757d;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+.ticket-item {
+  background: #fff;
+  border: 1px solid #bcd2ee;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  width: 100%;
+}
+
+.ticket-card-qr { 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  margin: 0 0 16px 0; 
+}
+.ticket-card-qr .ticket-qr-placeholder { 
+  width: 150px; 
+  height: 150px; 
+  background: #e9f0fc;
+  border-radius: 12px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-weight: 800; 
+  color: #1e40af; 
+  font-size: 1.5rem; 
+}
+.ticket-item-table { 
+  margin-top: 0; 
+  width: 100%;
+}
+.ticket-row { 
+  display: grid; 
+  grid-template-columns: 120px 1fr;
+  align-items: center; 
+  padding: 10px 0;
+  border-bottom: 1px solid #e9ecef; 
+}
+.ticket-row:last-child { 
+  border-bottom: none; 
+}
+.ticket-row-head { 
+  border-top: 1px solid #e9ecef; 
+  border-bottom: 1px solid #e9ecef; 
+}
+.ticket-label { 
+  color: #000; 
+  font-size: 16px;
+  font-weight: 500;
+}
+.ticket-value { 
+  color: #000; 
+  font-size: 16px;
+  font-weight: 500;
+  text-align: right;
+}
+.ticket-line { 
+  display: flex; 
+  gap: 8px; 
+  align-items: center; 
+  justify-content: flex-end;
+}
+.ticket-pill {
+  display: inline;
+  color: #000;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .my-ticket-container { 
+    padding: 20px 16px; 
+  }
+  .my-ticket-title {
+    font-size: 28px;
+  }
+  .ticket-tab-btn {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+  .ticket-list {
+    grid-template-columns: 1fr;
+  }
+  .ticket-label,
+  .ticket-value {
+    font-size: 24px;
+  }
+}
+
+.no-ticket-message{
+  text-align: center;
+  font-size: 3rem;
+  color: #555;
+  margin-top: 40px;
+}
