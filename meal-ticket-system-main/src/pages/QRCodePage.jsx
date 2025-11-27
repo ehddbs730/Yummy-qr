@@ -15,6 +15,7 @@ function QRCodePage() {
   const [scannedData, setScannedData] = useState(null);
   const [isScanning, setIsScanning] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
+  const [cameraStream, setCameraStream] = useState(null);
   
   // UI 관련 상태
   const [isLoading, setIsLoading] = useState(false);
@@ -27,30 +28,62 @@ function QRCodePage() {
   // 카메라 시작
   const startCamera = async () => {
     try {
+      console.log('[카메라 시작] 호출');
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'environment' }
       });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setCameraActive(true);
-        setIsScanning(true);
-      }
+      console.log('[카메라 시작] getUserMedia 성공, stream:', stream);
+      // 비디오 엘리먼트가 마운트된 이후에 srcObject를 할당하기 위해 스트림을 상태로 보관
+      setCameraStream(stream);
+      setCameraActive(true);
+      setIsScanning(true);
     } catch (err) {
-      setError('카메라 접근을 허용해주세요.');
-      console.error('카메라 접근 오류:', err);
+      setError('카메라 접근을 허용해주세요. (콘솔 확인 필요)');
+      console.error('[카메라 접근 오류]:', err);
     }
   };
 
   // 카메라 종료
   const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
-      videoRef.current.srcObject.getTracks().forEach(track => track.stop());
-      setCameraActive(false);
-      setIsScanning(false);
-      setScannedData(null);
+    try {
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(track => track.stop());
+      } else if (videoRef.current && videoRef.current.srcObject) {
+        videoRef.current.srcObject.getTracks().forEach(track => track.stop());
+      }
+    } catch (e) {
+      console.warn('stopCamera: 트랙 정지 중 오류', e);
     }
+    if (videoRef.current) {
+      try { videoRef.current.srcObject = null; } catch(e) {}
+    }
+    setCameraStream(null);
+    setCameraActive(false);
+    setIsScanning(false);
+    setScannedData(null);
   };
+
+  // cameraStream 또는 cameraActive 변경 시 비디오에 srcObject 할당 및 재생 시도
+  useEffect(() => {
+    const attachStream = async () => {
+      if (cameraActive && cameraStream && videoRef.current) {
+        videoRef.current.srcObject = cameraStream;
+        console.log('[카메라] 비디오에 srcObject 할당');
+        try {
+          if (videoRef.current.play) {
+            await videoRef.current.play();
+            console.log('[카메라] video.play() 성공');
+          }
+        } catch (playErr) {
+          console.warn('[카메라] video.play() 실패:', playErr);
+        }
+      }
+    };
+
+    attachStream();
+    return () => {};
+  }, [cameraActive, cameraStream]);
 
   // QR 코드 스캔
   useEffect(() => {
@@ -177,6 +210,7 @@ function QRCodePage() {
                 <video
                   ref={videoRef}
                   autoPlay
+                  muted
                   playsInline
                   className="camera-video"
                 />

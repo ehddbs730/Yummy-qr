@@ -79,9 +79,10 @@ body, html, #root {
 
 /* 카메라 비디오 스타일 */
 .camera-video {
+  display: block;
   width: 100%;
-  height: auto;
-  max-height: 400px;
+  height: 360px;
+  max-height: 480px;
   border-radius: 12px;
   object-fit: cover;
   background: #000;
