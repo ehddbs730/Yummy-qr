@@ -127,6 +127,8 @@ function MyTicketPage() {
   // QR 정보 조회 (uuid로)
   const fetchQrInfo = async (uuid, token) => {
     try {
+      console.log(`[QR 조회 시작] UUID: ${uuid}, Token: ${token ? '있음' : '없음'}`);
+      
       const response = await fetch(`${API_BASE_URL}/api/qr/info?uuid=${uuid}`, {
         method: 'GET',
         headers: {
@@ -135,13 +137,19 @@ function MyTicketPage() {
         }
       });
 
+      console.log(`[QR API 응답] Status: ${response.status}, UUID: ${uuid}`);
+
       if (response.ok) {
         const data = await response.json();
+        console.log(`[QR 파싱 성공] UUID: ${uuid}, ImageUrl: ${data.imageUrl}`);
         return data.imageUrl;
+      } else {
+        const errorText = await response.text();
+        console.error(`[QR API 실패] Status: ${response.status}, UUID: ${uuid}, Message: ${errorText}`);
+        return null;
       }
-      return null;
     } catch (err) {
-      console.error('QR 정보 조회 오류:', err);
+      console.error(`[QR 조회 에러] UUID: ${uuid}, Error:`, err);
       return null;
     }
   };
@@ -149,21 +157,49 @@ function MyTicketPage() {
   // 모든 티켓의 QR 이미지 로드
   const loadQrImages = async (tickets) => {
     const token = localStorage.getItem('accessToken');
+    
+    if (!token) {
+      console.warn('[QR 이미지 로드] 토큰이 없습니다.');
+      return;
+    }
+
+    if (!Array.isArray(tickets) || tickets.length === 0) {
+      console.warn('[QR 이미지 로드] 티켓 배열이 비어있습니다.');
+      return;
+    }
+
     const qrMap = {};
+    console.log(`[QR 이미지 로드 시작] 총 ${tickets.length}개 티켓`);
+
     for (const ticket of tickets) {
-      if (ticket.qrCode) {
-        try {
-          const imageUrl = await fetchQrInfo(ticket.qrCode, token);
-          console.log(`QR Code ${ticket.qrCode}:`, imageUrl);
-          if (imageUrl) {
-            qrMap[ticket.qrCode] = imageUrl;
-          }
-        } catch (error) {
-          console.error(`QR 이미지 로드 실패 (${ticket.qrCode}):`, error);
+      if (!ticket.qrCode) {
+        console.warn('[QR 이미지 로드] QR 코드 없음:', ticket);
+        continue;
+      }
+
+      // 이미 로드된 QR은 스킵
+      if (qrImages[ticket.qrCode]) {
+        console.log(`[QR 이미지 로드] 이미 로드됨 (스킵): ${ticket.qrCode}`);
+        qrMap[ticket.qrCode] = qrImages[ticket.qrCode];
+        continue;
+      }
+
+      try {
+        console.log(`[QR 이미지 로드] 로드 중: ${ticket.qrCode}`);
+        const imageUrl = await fetchQrInfo(ticket.qrCode, token);
+        
+        if (imageUrl) {
+          qrMap[ticket.qrCode] = imageUrl;
+          console.log(`[QR 이미지 로드] 성공: ${ticket.qrCode}`);
+        } else {
+          console.warn(`[QR 이미지 로드] 실패 (null): ${ticket.qrCode}`);
         }
+      } catch (error) {
+        console.error(`[QR 이미지 로드] 예외 발생 (${ticket.qrCode}):`, error);
       }
     }
-    console.log('QR 이미지 맵 업데이트:', qrMap);
+
+    console.log('[QR 이미지 로드 완료] 매핑:', qrMap);
     setQrImages(prev => ({ ...prev, ...qrMap }));
   };
 
@@ -177,6 +213,9 @@ function MyTicketPage() {
         userId: localStorage.getItem('userId'),
         userName: localStorage.getItem('userName')
       };
+
+      console.log('[초기 로드] Token:', token ? '있음' : '없음');
+      console.log('[초기 로드] UserInfo:', userInfo);
 
       if (!token) {
         setError('로그인이 필요합니다.');
@@ -195,7 +234,7 @@ function MyTicketPage() {
         fetchExpiredTickets(token, userInfo)
       ]);
       
-      console.log('티켓 로드 완료 - 미사용:', unusedTickets, '만료:', expiredTickets);
+      console.log('[초기 로드 완료]');
       setIsLoading(false);
     };
 
@@ -205,6 +244,8 @@ function MyTicketPage() {
   // 탭 변경 시 QR 이미지 로드
   useEffect(() => {
     const ticketsToLoad = activeTab === 0 ? unusedTickets : expiredTickets;
+    console.log(`[탭 변경] activeTab: ${activeTab}, 로드할 티켓: ${ticketsToLoad.length}개`);
+    
     if (ticketsToLoad.length > 0) {
       loadQrImages(ticketsToLoad);
     }
