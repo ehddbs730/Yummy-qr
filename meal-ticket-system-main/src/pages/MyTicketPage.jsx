@@ -325,10 +325,24 @@ function MyTicketPage() {
               const isExpiredTab = activeTab === 1;
               const statusText = isUsed ? '사용됨' : (isExpiredTab ? '만료' : '미사용');
               const qrImageUrl = ticket.qrCode ? qrImages[ticket.qrCode] : null;
+              // S3 직접 URL 생성
+              const s3DirectUrl = ticket.qrCode 
+                ? `https://yummypass-bucket.s3.ap-northeast-2.amazonaws.com/qr-images/${ticket.qrCode}.png`
+                : null;
               
               return (
                 <div key={ticket.id} className="ticket-item">
-                  <div className="ticket-card-qr">
+                  <div 
+                    className="ticket-card-qr" 
+                    onClick={() => {
+                      const urlToOpen = qrImageUrl || s3DirectUrl;
+                      if (urlToOpen) {
+                        window.open(urlToOpen, '_blank');
+                      }
+                    }}
+                    style={{ cursor: (qrImageUrl || s3DirectUrl) ? 'pointer' : 'default', position: 'relative', zIndex: 10 }}
+                    title="클릭하여 QR 코드 이미지 보기"
+                  >
                     {qrImageUrl ? (
                       <img 
                         src={qrImageUrl} 
@@ -338,7 +352,8 @@ function MyTicketPage() {
                           width: '261px', 
                           height: '261px',
                           borderRadius: '16px',
-                          objectFit: 'contain'
+                          objectFit: 'contain',
+                          pointerEvents: 'none'
                         }}
                       />
                     ) : (
