@@ -90,12 +90,15 @@ function QRCodePage() {
       return;
     }
 
+    // UUID를 명시적으로 문자열로 변환
+    const uuidString = String(uuidToUse).trim();
+
     setIsLoading(true);
     setMessage('');
     setMessageType('');
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/qr/use?uuid=${encodeURIComponent(uuidToUse)}`, {
+      const response = await fetch(`${API_BASE_URL}/api/qr/use?uuid=${encodeURIComponent(uuidString)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
