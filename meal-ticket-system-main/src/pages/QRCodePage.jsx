@@ -80,44 +80,11 @@ function QRCodePage() {
     return () => {};
   }, [cameraActive, cameraStream]);
 
-  // QR 코드 스캔
-  useEffect(() => {
-    const scanQRCode = () => {
-      if (videoRef.current && canvasRef.current && isScanning) {
-        const canvas = canvasRef.current;
-        const video = videoRef.current;
-        
-        if (video.readyState === video.HAVE_ENOUGH_DATA) {
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-          
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(video, 0, 0);
-          
-          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-          const code = jsQR(imageData.data, imageData.width, imageData.height);
-          
-          if (code) {
-            setScannedData(code.data);
-            setIsScanning(false);
-            setUuid(code.data); // 스캔된 데이터를 입력 필드에 설정
-          }
-        }
-      }
-
-      if (isScanning) {
-        requestAnimationFrame(scanQRCode);
-      }
-    };
-
-    if (isScanning) {
-      scanQRCode();
-    }
-  }, [isScanning]);
-
   // API를 통해 QR 사용 처리
-  const handleUseQR = async () => {
-    if (!uuid.trim()) {
+  const handleUseQR = async (qrUuid) => {
+    const uuidToUse = qrUuid || uuid.trim();
+    
+    if (!uuidToUse) {
       setMessage('UUID를 입력해주세요.');
       setMessageType('error');
       return;
@@ -128,7 +95,7 @@ function QRCodePage() {
     setMessageType('');
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/qr/use?uuid=${encodeURIComponent(uuid.trim())}`, {
+      const response = await fetch(`${API_BASE_URL}/api/qr/use?uuid=${encodeURIComponent(uuidToUse)}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,20 +114,62 @@ function QRCodePage() {
       } else if (response.status === 404) {
         setMessage(responseText || '존재하지 않는 QR입니다.');
         setMessageType('error');
+        stopCamera(); // 에러 시에도 카메라 종료
       } else if (response.status === 401) {
         setMessage('로그인이 필요합니다.');
         setMessageType('error');
+        stopCamera(); // 에러 시에도 카메라 종료
       } else {
         setMessage(responseText || 'QR 사용 처리에 실패했습니다.');
         setMessageType('error');
+        stopCamera(); // 에러 시에도 카메라 종료
       }
     } catch (err) {
       setMessage('네트워크 오류가 발생했습니다.');
       setMessageType('error');
+      stopCamera(); // 에러 시에도 카메라 종료
     } finally {
       setIsLoading(false);
     }
   };
+
+  // QR 코드 스캔
+  useEffect(() => {
+    const scanQRCode = () => {
+      if (videoRef.current && canvasRef.current && isScanning && !isLoading) {
+        const canvas = canvasRef.current;
+        const video = videoRef.current;
+        
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          ctx.drawImage(video, 0, 0);
+          
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+          
+          if (code && !isLoading) {
+            setScannedData(code.data);
+            setIsScanning(false); // 즉시 스캔 중지하여 중복 인식 방지
+            setUuid(code.data);
+            // QR 코드 스캔 즉시 API 호출
+            handleUseQR(code.data);
+            return; // 추가 스캔 방지
+          }
+        }
+      }
+
+      if (isScanning && !isLoading) {
+        requestAnimationFrame(scanQRCode);
+      }
+    };
+
+    if (isScanning && !isLoading) {
+      scanQRCode();
+    }
+  }, [isScanning, isLoading]);
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter' && !isLoading) {
