@@ -28,19 +28,16 @@ function QRCodePage() {
   // 카메라 시작
   const startCamera = async () => {
     try {
-      console.log('[카메라 시작] 호출');
       setError(null);
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: 'environment' }
       });
-      console.log('[카메라 시작] getUserMedia 성공, stream:', stream);
       // 비디오 엘리먼트가 마운트된 이후에 srcObject를 할당하기 위해 스트림을 상태로 보관
       setCameraStream(stream);
       setCameraActive(true);
       setIsScanning(true);
     } catch (err) {
-      setError('카메라 접근을 허용해주세요. (콘솔 확인 필요)');
-      console.error('[카메라 접근 오류]:', err);
+      setError('카메라 접근을 허용해주세요.');
     }
   };
 
@@ -53,7 +50,7 @@ function QRCodePage() {
         videoRef.current.srcObject.getTracks().forEach(track => track.stop());
       }
     } catch (e) {
-      console.warn('stopCamera: 트랙 정지 중 오류', e);
+      // 오류 무시
     }
     if (videoRef.current) {
       try { videoRef.current.srcObject = null; } catch(e) {}
@@ -69,14 +66,12 @@ function QRCodePage() {
     const attachStream = async () => {
       if (cameraActive && cameraStream && videoRef.current) {
         videoRef.current.srcObject = cameraStream;
-        console.log('[카메라] 비디오에 srcObject 할당');
         try {
           if (videoRef.current.play) {
             await videoRef.current.play();
-            console.log('[카메라] video.play() 성공');
           }
         } catch (playErr) {
-          console.warn('[카메라] video.play() 실패:', playErr);
+          // 오류 무시
         }
       }
     };
@@ -160,7 +155,6 @@ function QRCodePage() {
         setMessageType('error');
       }
     } catch (err) {
-      console.error('QR 사용 처리 오류:', err);
       setMessage('네트워크 오류가 발생했습니다.');
       setMessageType('error');
     } finally {
