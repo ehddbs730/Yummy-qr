@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/main.css';
 import logo from '../assets/images/yummy_png.png';
+// 임시 테스트용: 외부 S3 로고 URL로 대체하여 이미지 로딩 확인
 import { API_BASE_URL } from '../api';
 
 // 상단 네비게이션 바
 function Navbar() {
+  const EXTERNAL_LOGO_URL = 'https://yummypass-bucket.s3.ap-northeast-2.amazonaws.com/qr-images/6c049670-1626-42e2-8a2b-16b3cfeba61c.png';
   const navigate = useNavigate();
   const location = useLocation();
   const [userId, setUserId] = useState('');
@@ -104,7 +106,13 @@ function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/ticket-purchase" className="navbar__site-name">
-        <img src={logo} alt="Yummy Pass 로고" className="navbar__logo" />
+        {/* 테스트 목적: 외부 URL만 사용, 실패 시 대체 없음 */}
+        <img
+          src={EXTERNAL_LOGO_URL}
+          alt="Yummy Pass 로고"
+          className="navbar__logo"
+          crossOrigin="anonymous"
+        />
       </Link>
       <ul className="navbar__menu">
         {renderMenuByRole()}
