@@ -33,6 +33,9 @@ function TicketPurchase() {
     if (!userRole) {
       // role이 없으면 소셜 로그인 사용자로 간주하여 STUDENT로 설정
       localStorage.setItem('userRole', 'STUDENT');
+      // Navbar 업데이트를 위해 페이지 새로고침
+      window.location.reload();
+      return; // 새로고침 후에는 아래 코드 실행 안 함
     }
     
     fetchRestaurants();
