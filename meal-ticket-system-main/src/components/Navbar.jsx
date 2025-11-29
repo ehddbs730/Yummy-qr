@@ -2,30 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import '../styles/main.css';
 import logo from '../assets/images/yummy_png.png';
-// 임시 테스트용: 외부 S3 로고 URL로 대체하여 이미지 로딩 확인
 import { API_BASE_URL } from '../api';
 
 // 상단 네비게이션 바
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [userId, setUserId] = useState('');
+  const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
 
   useEffect(() => {
     // 컴포넌트 마운트 및 경로 변경 시 사용자 정보 업데이트
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserName = localStorage.getItem('userName');
     const storedUserRole = localStorage.getItem('userRole');
-    setUserId(storedUserId || '');
+    setUserName(storedUserName || '');
     setUserRole(storedUserRole || '');
   }, [location.pathname]);
 
   const clearLocalStorage = () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
     localStorage.removeItem('userName');
     localStorage.removeItem('userRole');
-    setUserId('');
+    setUserName('');
     setUserRole('');
     navigate('/');
   };
@@ -45,7 +44,8 @@ function Navbar() {
         headers: {
           'Authorization': token,
           'Content-Type': 'application/json',
-        }
+        },
+        credentials: 'include'
       });
 
       const data = await response.json();
@@ -111,13 +111,13 @@ function Navbar() {
         {renderMenuByRole()}
       </ul>
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        {userId && (
+        {userName && (
           <span style={{ 
             fontSize: '14px', 
             color: '#666',
             fontWeight: '500'
           }}>
-            {userId}
+            {userName}
           </span>
         )}
         <button className="navbar__logout" onClick={handleLogout}>로그아웃</button>

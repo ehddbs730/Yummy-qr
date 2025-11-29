@@ -55,6 +55,9 @@ function SocialSignUpPhone() {
         if (userName) {
           localStorage.setItem('userName', userName);
         }
+        if (data.token) {
+          localStorage.setItem('accessToken', data.token);
+        }
         navigate('/ticket-purchase');
       } else {
         setError(data.error || data.message || '설정에 실패했습니다.');

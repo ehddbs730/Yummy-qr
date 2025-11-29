@@ -63,6 +63,7 @@ function PaymentPage() {
           'Content-Type': 'application/json',
           'Authorization': accessToken
         },
+        credentials: 'include',
         body: JSON.stringify(orderData)
       });
 

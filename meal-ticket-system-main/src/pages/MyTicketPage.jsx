@@ -76,7 +76,8 @@ function MyTicketPage() {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': token || ''
-        }
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -105,7 +106,8 @@ function MyTicketPage() {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': token || ''
-        }
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {
@@ -130,7 +132,8 @@ function MyTicketPage() {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': token || ''
-        }
+        },
+        credentials: 'include'
       });
 
       if (response.ok) {

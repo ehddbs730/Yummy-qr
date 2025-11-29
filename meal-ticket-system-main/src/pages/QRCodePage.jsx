@@ -103,7 +103,8 @@ function QRCodePage() {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': accessToken || ''
-        }
+        },
+        credentials: 'include'
       });
 
       const responseText = await response.text();
