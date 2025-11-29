@@ -69,7 +69,7 @@ function MyTicketPage() {
   };
 
   // 미사용 티켓 조회
-  const fetchUnusedTickets = async (token, userInfo) => {
+  const fetchUnusedTickets = async (token) => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/tickets/unused`, {
         method: 'GET',
@@ -82,8 +82,8 @@ function MyTicketPage() {
 
       if (response.ok) {
         const data = await response.json();
-        const filteredTickets = filterTicketsByUser(data || [], userInfo);
-        const { valid, expired } = splitTicketsByExpiry(filteredTickets);
+        // 백엔드가 쿠키 기반으로 필터링해서 보내주므로 그대로 사용
+        const { valid, expired } = splitTicketsByExpiry(data || []);
         setUnusedTickets(valid);
         if (expired.length > 0) {
           setExpiredTickets((prev) => dedupeTickets([...prev, ...expired]));
@@ -99,7 +99,7 @@ function MyTicketPage() {
   };
 
   // 만료된 티켓 조회
-  const fetchExpiredTickets = async (token, userInfo) => {
+  const fetchExpiredTickets = async (token) => {
     try {
       const response = await fetch(`${API_BASE_URL}/api/tickets/expired`, {
         method: 'GET',
@@ -112,8 +112,8 @@ function MyTicketPage() {
 
       if (response.ok) {
         const data = await response.json();
-        const filteredTickets = filterTicketsByUser(data || [], userInfo);
-        setExpiredTickets((prev) => dedupeTickets([...prev, ...filteredTickets]));
+        // 백엔드가 쿠키 기반으로 필터링해서 보내주므로 그대로 사용
+        setExpiredTickets((prev) => dedupeTickets([...prev, ...(data || [])]));
       } else if (response.status === 401) {
         setError('로그인이 필요합니다.');
       } else {
@@ -192,26 +192,12 @@ function MyTicketPage() {
       setIsLoading(true);
       setError('');
       const token = localStorage.getItem('accessToken');
-      const userInfo = {
-        userId: localStorage.getItem('userId'),
-        userName: localStorage.getItem('userName')
-      };
 
-      if (!token) {
-        setError('로그인이 필요합니다.');
-        setIsLoading(false);
-        return;
-      }
-
-      if (!userInfo.userId && !userInfo.userName) {
-        setError('사용자 정보를 찾을 수 없습니다. 다시 로그인해주세요.');
-        setIsLoading(false);
-        return;
-      }
-
+      // 쿠키 기반 인증으로 작동하므로 token 체크 제거
+      // 백엔드가 쿠키로 사용자 확인
       await Promise.all([
-        fetchUnusedTickets(token, userInfo),
-        fetchExpiredTickets(token, userInfo)
+        fetchUnusedTickets(token),
+        fetchExpiredTickets(token)
       ]);
       
       setIsLoading(false);
