@@ -28,11 +28,10 @@ function TicketPurchase() {
 
   useEffect(() => {
     // 소셜 로그인 사용자는 자동으로 STUDENT role 설정
-    const token = localStorage.getItem('accessToken');
     const userRole = localStorage.getItem('userRole');
     
-    if (token && !userRole) {
-      // 토큰은 있는데 role이 없으면 소셜 로그인 사용자로 간주
+    if (!userRole) {
+      // role이 없으면 소셜 로그인 사용자로 간주하여 STUDENT로 설정
       localStorage.setItem('userRole', 'STUDENT');
     }
     
