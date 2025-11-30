@@ -27,6 +27,18 @@ function TicketPurchase() {
   };
 
   useEffect(() => {
+    // 소셜 로그인 사용자는 자동으로 STUDENT role 설정
+    const userRole = localStorage.getItem('userRole');
+    
+    if (!userRole) {
+      // role이 없으면 소셜 로그인 사용자로 간주하여 STUDENT로 설정
+      localStorage.setItem('userRole', 'STUDENT');
+      localStorage.setItem('userName', '소셜 이용자');
+      // Navbar 업데이트를 위해 페이지 새로고침
+      window.location.reload();
+      return;
+    }
+    
     fetchRestaurants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
