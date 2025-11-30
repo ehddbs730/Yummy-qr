@@ -24,6 +24,7 @@ function QRCodePage() {
   const [error, setError] = useState(null);
 
   const accessToken = localStorage.getItem('accessToken');
+  const userName = localStorage.getItem('userName') || '사용자';
 
   // 카메라 시작
   const startCamera = async () => {
@@ -107,16 +108,17 @@ function QRCodePage() {
         credentials: 'include'
       });
 
-      const responseText = await response.text();
+      const data = await response.json();
+      const displayMessage = data?.message || data;
 
       if (response.ok) {
-        setMessage(responseText || 'QR 사용이 완료되었습니다.');
+        setMessage(`${userName}님, ${typeof displayMessage === 'string' ? displayMessage : 'QR 사용이 완료되었습니다.'}`);
         setMessageType('success');
         setUuid(''); // 성공 시 입력 필드 초기화
         setScannedData(null);
         stopCamera(); // 성공 시 카메라 종료
       } else if (response.status === 404) {
-        setMessage(responseText || '존재하지 않는 QR입니다.');
+        setMessage(`${userName}님, ${typeof displayMessage === 'string' ? displayMessage : '존재하지 않는 QR입니다.'}`);
         setMessageType('error');
         stopCamera(); // 에러 시에도 카메라 종료
       } else if (response.status === 401) {
@@ -124,7 +126,7 @@ function QRCodePage() {
         setMessageType('error');
         stopCamera(); // 에러 시에도 카메라 종료
       } else {
-        setMessage(responseText || 'QR 사용 처리에 실패했습니다.');
+        setMessage(`${userName}님, ${typeof displayMessage === 'string' ? displayMessage : 'QR 사용 처리에 실패했습니다.'}`);
         setMessageType('error');
         stopCamera(); // 에러 시에도 카메라 종료
       }
