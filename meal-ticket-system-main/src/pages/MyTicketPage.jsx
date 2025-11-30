@@ -135,13 +135,7 @@ function MyTicketPage() {
   };
 
   // QR 정보 조회 (uuid로)
-  // 임시: ADMIN 권한 필요로 인해 S3 URL 직접 구성
-  // TODO: 백엔드에서 @PreAuthorize("isAuthenticated()")로 수정 후 API 호출로 변경
   const fetchQrInfo = async (uuid, token) => {
-    // S3 URL 패턴: https://yummypass-bucket.s3.ap-northeast-2.amazonaws.com/qr-images/{uuid}.png
-    return `https://yummypass-bucket.s3.ap-northeast-2.amazonaws.com/qr-images/${uuid}.png`;
-    
-    /* 백엔드 권한 수정 후 사용할 코드:
     try {
       const headers = {
         'Content-Type': 'application/json'
@@ -166,7 +160,6 @@ function MyTicketPage() {
     } catch (err) {
       return null;
     }
-    */
   };
 
   // 모든 티켓의 QR 이미지 로드
