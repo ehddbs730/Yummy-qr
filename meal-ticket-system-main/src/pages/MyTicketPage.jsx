@@ -10,6 +10,7 @@ function MyTicketPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [qrImages, setQrImages] = useState({}); // qrCode -> imageUrl 매핑
+  const [receivingTicket, setReceivingTicket] = useState(null); // 수령 처리 중인 티켓 ID
 
   const EXPIRY_DURATION_MS = 24 * 60 * 60 * 1000; // 24시간
 
@@ -199,6 +200,52 @@ function MyTicketPage() {
     }
 
     setQrImages(prev => ({ ...prev, ...qrMap }));
+  };
+
+  // 수령 확인 처리
+  const handleReceive = async (ticketId) => {
+    const token = localStorage.getItem('accessToken');
+    const userName = localStorage.getItem('userName') || '사용자';
+
+    if (!window.confirm('수령 확인하시겠습니까?')) {
+      return;
+    }
+
+    setReceivingTicket(ticketId);
+
+    try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/tickets/${ticketId}/receive`, {
+        method: 'PATCH',
+        headers: headers,
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        alert(`${userName}님, 수령이 완료되었습니다.`);
+        // 티켓 목록 새로고침
+        await Promise.all([
+          fetchUnusedTickets(token),
+          fetchExpiredTickets(token)
+        ]);
+      } else if (response.status === 400) {
+        const errorMessage = await response.text();
+        alert(errorMessage || '수령 처리에 실패했습니다.');
+      } else {
+        alert('수령 처리에 실패했습니다.');
+      }
+    } catch (err) {
+      alert('네트워크 오류가 발생했습니다.');
+    } finally {
+      setReceivingTicket(null);
+    }
   };
 
   // 초기 데이터 로드
@@ -398,6 +445,17 @@ function MyTicketPage() {
                       </div>
                     )}
                   </div>
+                  
+                  {/* 수령 확인 버튼 - 미사용 티켓에만 표시 */}
+                  {activeTab === 0 && !ticket.isUsed && !ticket.receivedTime && (
+                    <button
+                      className="ticket-receive-btn"
+                      onClick={() => handleReceive(ticket.id)}
+                      disabled={receivingTicket === ticket.id}
+                    >
+                      {receivingTicket === ticket.id ? '처리 중...' : '수령 확인'}
+                    </button>
+                  )}
                 </div>
               );
             })

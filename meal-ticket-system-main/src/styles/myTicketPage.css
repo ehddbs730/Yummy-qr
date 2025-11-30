@@ -196,3 +196,33 @@ body, html, #root {
   color: #555;
   margin-top: 40px;
 }
+
+/* 수령 확인 버튼 */
+.ticket-receive-btn {
+  width: 100%;
+  padding: 16px;
+  margin-top: 16px;
+  background: #4b5ae4;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.ticket-receive-btn:hover:not(:disabled) {
+  background: #3d4bc7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(75, 90, 228, 0.3);
+}
+
+.ticket-receive-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.ticket-receive-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
