@@ -498,8 +498,8 @@ function MyTicketPage() {
                     )}
                   </div>
                   
-                  {/* 수령 확인 버튼 - 미사용 탭에서만 표시 */}
-                  {activeTab === 0 && !ticket.receivedTime && (
+                  {/* 수령 확인 버튼 - 사용 탭에서만 표시 */}
+                  {activeTab === 1 && !ticket.receivedTime && (
                     <button
                       className="ticket-receive-btn"
                       onClick={() => handleReceive(ticket.id)}
