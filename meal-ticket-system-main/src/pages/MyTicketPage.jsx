@@ -236,7 +236,6 @@ function MyTicketPage() {
   // 수령 확인 처리
   const handleReceive = async (ticketId) => {
     const token = localStorage.getItem('accessToken');
-    const userName = localStorage.getItem('userName') || '사용자';
 
     if (!window.confirm('수령 확인하시겠습니까?')) {
       return;
@@ -260,7 +259,7 @@ function MyTicketPage() {
       });
 
       if (response.ok) {
-        alert(`${userName}님, 수령이 완료되었습니다.`);
+        alert('수령이 완료되었습니다.');
         // 티켓 목록 새로고침
         await Promise.all([
           fetchUnusedTickets(token),
