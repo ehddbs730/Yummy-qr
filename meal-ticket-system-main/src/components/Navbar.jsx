@@ -30,14 +30,11 @@ function Navbar() {
   };
 
   const handleLogout = async () => {
+    // 백엔드 CORS 이슈로 인해 프론트엔드에서만 로그아웃 처리
+    // 백엔드 SecurityConfig에서 OPTIONS 요청 허용 후 주석 해제
+    /*
     const token = localStorage.getItem('accessToken');
     
-    // 토큰이 없으면 바로 정리하고 이동
-    if (!token) {
-      clearLocalStorage();
-      return;
-    }
-
     try {
       const headers = {
         'Content-Type': 'application/json',
@@ -47,27 +44,17 @@ function Navbar() {
         headers['Authorization'] = `Bearer ${token}`;
       }
 
-      const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+      await fetch(`${API_BASE_URL}/api/auth/logout`, {
         method: 'POST',
         headers: headers,
         credentials: 'include'
       });
-
-      const data = await response.json();
-      // 로그아웃 성공
-      if (response.ok) {
-        // 정리
-        clearLocalStorage();
-      } else {
-        // 토큰이 유효하지 않아도 정리
-        console.error('로그아웃 오류:', data);
-        clearLocalStorage();
-      }
     } catch (err) {
-      // 네트워크 오류에도 정리
-      console.error('로그아웃 네트워크 오류:', err);
-      clearLocalStorage();
+      // 에러 무시
     }
+    */
+    
+    clearLocalStorage();
   };
 
   // 현재 경로가 해당 링크와 일치하는지 확인하는 함수
