@@ -38,7 +38,7 @@ body, html, #root {
   position: absolute;
   top: 4px;
   left: 4px;
-  width: calc(50% - 6px);
+  width: calc(33.333% - 5.33px);
   height: calc(100% - 8px);
   background: #4b5ae4;
   border-radius: 26px;
@@ -48,7 +48,11 @@ body, html, #root {
 }
 
 .ticket-tab-slider.active-1::before {
-  transform: translateX(calc(100% + 8px));
+  transform: translateX(calc(100% + 6.67px));
+}
+
+.ticket-tab-slider.active-2::before {
+  transform: translateX(calc(200% + 13.33px));
 }
 
 .ticket-tab-btn {

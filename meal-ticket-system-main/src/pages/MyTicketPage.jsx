@@ -4,8 +4,9 @@ import { API_BASE_URL } from '../api';
 import '../styles/myTicketPage.css';
 
 function MyTicketPage() {
-  const [activeTab, setActiveTab] = useState(0); // 0: 미사용, 1: 만료/사용됨
+  const [activeTab, setActiveTab] = useState(0); // 0: 미사용, 1: 사용, 2: 만료
   const [unusedTickets, setUnusedTickets] = useState([]);
+  const [usedTickets, setUsedTickets] = useState([]);
   const [expiredTickets, setExpiredTickets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -101,6 +102,36 @@ function MyTicketPage() {
       }
     } catch (err) {
       setError('네트워크 오류가 발생했습니다.');
+    }
+  };
+
+  // 사용한 티켓 조회
+  const fetchUsedTickets = async (token) => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/api/tickets/used`, {
+        method: 'GET',
+        headers: headers,
+        credentials: 'include'
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUsedTickets(data || []);
+      } else if (response.status === 401) {
+        setError('로그인이 필요합니다.');
+      } else {
+        setUsedTickets([]);
+      }
+    } catch (err) {
+      setUsedTickets([]);
     }
   };
 
@@ -233,6 +264,7 @@ function MyTicketPage() {
         // 티켓 목록 새로고침
         await Promise.all([
           fetchUnusedTickets(token),
+          fetchUsedTickets(token),
           fetchExpiredTickets(token)
         ]);
       } else if (response.status === 400) {
@@ -259,6 +291,7 @@ function MyTicketPage() {
       // 백엔드가 쿠키로 사용자 확인
       await Promise.all([
         fetchUnusedTickets(token),
+        fetchUsedTickets(token),
         fetchExpiredTickets(token)
       ]);
       
@@ -270,12 +303,19 @@ function MyTicketPage() {
 
   // 탭 변경 시 QR 이미지 로드
   useEffect(() => {
-    const ticketsToLoad = activeTab === 0 ? unusedTickets : expiredTickets;
+    let ticketsToLoad = [];
+    if (activeTab === 0) {
+      ticketsToLoad = unusedTickets;
+    } else if (activeTab === 1) {
+      ticketsToLoad = usedTickets;
+    } else {
+      ticketsToLoad = expiredTickets;
+    }
     
     if (ticketsToLoad.length > 0) {
       loadQrImages(ticketsToLoad);
     }
-  }, [activeTab, unusedTickets, expiredTickets]);
+  }, [activeTab, unusedTickets, usedTickets, expiredTickets]);
 
   // 날짜 포맷팅
   const formatDate = (dateString) => {
@@ -301,9 +341,11 @@ function MyTicketPage() {
   const filtered = useMemo(() => {
     if (activeTab === 0) {
       return unusedTickets;
+    } else if (activeTab === 1) {
+      return usedTickets;
     }
     return expiredTickets;
-  }, [activeTab, unusedTickets, expiredTickets]);
+  }, [activeTab, unusedTickets, usedTickets, expiredTickets]);
 
   if (isLoading) {
     return (
@@ -343,18 +385,24 @@ function MyTicketPage() {
         
         {/* 캡슐 탭 버튼 */}
         <div className="ticket-tab-container">
-          <div className={`ticket-tab-slider ${activeTab === 1 ? 'active-1' : ''}`}>
+          <div className={`ticket-tab-slider active-${activeTab}`}>
             <button
               className={`ticket-tab-btn ${activeTab === 0 ? 'active' : ''}`}
               onClick={() => setActiveTab(0)}
             >
-              미사용 식권
+              미사용
             </button>
             <button
               className={`ticket-tab-btn ${activeTab === 1 ? 'active' : ''}`}
               onClick={() => setActiveTab(1)}
             >
-              만료된 식권
+              사용
+            </button>
+            <button
+              className={`ticket-tab-btn ${activeTab === 2 ? 'active' : ''}`}
+              onClick={() => setActiveTab(2)}
+            >
+              만료
             </button>
           </div>
         </div>
@@ -373,8 +421,12 @@ function MyTicketPage() {
           ) : (
             filtered.map((ticket) => {
               const isUsed = ticket.isUsed === true;
-              const isExpiredTab = activeTab === 1;
-              const statusText = isUsed ? '사용됨' : (isExpiredTab ? '만료' : '미사용');
+              let statusText = '미사용';
+              if (activeTab === 1) {
+                statusText = '사용됨';
+              } else if (activeTab === 2) {
+                statusText = '만료';
+              }
               const qrImageUrl = ticket.qrCode ? qrImages[ticket.qrCode] : null;
               // S3 직접 URL 생성
               const s3DirectUrl = ticket.qrCode 
@@ -446,8 +498,8 @@ function MyTicketPage() {
                     )}
                   </div>
                   
-                  {/* 수령 확인 버튼 - 미사용 티켓에만 표시 */}
-                  {activeTab === 0 && !ticket.isUsed && !ticket.receivedTime && (
+                  {/* 수령 확인 버튼 - 미사용 탭에서만 표시 */}
+                  {activeTab === 0 && !ticket.receivedTime && (
                     <button
                       className="ticket-receive-btn"
                       onClick={() => handleReceive(ticket.id)}
