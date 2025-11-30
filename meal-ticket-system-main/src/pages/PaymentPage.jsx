@@ -57,12 +57,17 @@ function PaymentPage() {
         paymentMethod: 'NAVER_PAY'
       };
 
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (accessToken) {
+        headers['Authorization'] = `Bearer ${accessToken}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/orders/checkout`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': accessToken
-        },
+        headers: headers,
         credentials: 'include',
         body: JSON.stringify(orderData)
       });
