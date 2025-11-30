@@ -71,12 +71,17 @@ function MyTicketPage() {
   // 미사용 티켓 조회
   const fetchUnusedTickets = async (token) => {
     try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/tickets/unused`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token || ''
-        },
+        headers: headers,
         credentials: 'include'
       });
 
@@ -101,12 +106,17 @@ function MyTicketPage() {
   // 만료된 티켓 조회
   const fetchExpiredTickets = async (token) => {
     try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/tickets/expired`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token || ''
-        },
+        headers: headers,
         credentials: 'include'
       });
 
@@ -127,12 +137,17 @@ function MyTicketPage() {
   // QR 정보 조회 (uuid로)
   const fetchQrInfo = async (uuid, token) => {
     try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/qr/info?uuid=${uuid}`, {
         method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token || ''
-        },
+        headers: headers,
         credentials: 'include'
       });
 
