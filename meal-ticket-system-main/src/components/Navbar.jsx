@@ -30,9 +30,7 @@ function Navbar() {
   };
 
   const handleLogout = async () => {
-    // 백엔드 CORS 이슈로 인해 프론트엔드에서만 로그아웃 처리
-    // 백엔드 SecurityConfig에서 OPTIONS 요청 허용 후 주석 해제
-    /*
+
     const token = localStorage.getItem('accessToken');
     
     try {
@@ -50,9 +48,8 @@ function Navbar() {
         credentials: 'include'
       });
     } catch (err) {
-      // 에러 무시
+      // 에러 우시
     }
-    */
     
     clearLocalStorage();
   };
