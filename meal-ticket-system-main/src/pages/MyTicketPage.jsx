@@ -426,26 +426,32 @@ function MyTicketPage() {
               } else if (activeTab === 2) {
                 statusText = '만료';
               }
-              const qrImageUrl = ticket.qrCode ? qrImages[ticket.qrCode] : null;
-              // S3 직접 URL 생성
-              const s3DirectUrl = ticket.qrCode 
-                ? `https://yummypass-bucket.s3.ap-northeast-2.amazonaws.com/qr-images/${ticket.qrCode}.png`
-                : null;
+              
+              // 미사용 탭에서만 QR 이미지 표시
+              const shouldShowQR = activeTab === 0;
+              const qrImageUrl = shouldShowQR && ticket.qrCode ? qrImages[ticket.qrCode] : null;
+              
+              // 사용/만료 탭의 메시지
+              let qrPlaceholderText = 'QR';
+              if (activeTab === 1) {
+                qrPlaceholderText = '이미 사용된 QR입니다.';
+              } else if (activeTab === 2) {
+                qrPlaceholderText = '만료된 QR입니다.';
+              }
               
               return (
                 <div key={ticket.id} className="ticket-item">
                   <div 
                     className="ticket-card-qr" 
                     onClick={() => {
-                      const urlToOpen = qrImageUrl || s3DirectUrl;
-                      if (urlToOpen) {
-                        window.open(urlToOpen, '_blank');
+                      if (shouldShowQR && qrImageUrl) {
+                        window.open(qrImageUrl, '_blank');
                       }
                     }}
-                    style={{ cursor: (qrImageUrl || s3DirectUrl) ? 'pointer' : 'default', position: 'relative', zIndex: 10 }}
-                    title="클릭하여 QR 코드 이미지 보기"
+                    style={{ cursor: (shouldShowQR && qrImageUrl) ? 'pointer' : 'default', position: 'relative', zIndex: 10 }}
+                    title={shouldShowQR ? "클릭하여 QR 코드 이미지 보기" : ""}
                   >
-                    {qrImageUrl ? (
+                    {shouldShowQR && qrImageUrl ? (
                       <img 
                         src={qrImageUrl} 
                         alt="QR Code"
@@ -459,7 +465,7 @@ function MyTicketPage() {
                         }}
                       />
                     ) : (
-                      <div className="ticket-qr-placeholder">QR</div>
+                      <div className="ticket-qr-placeholder">{qrPlaceholderText}</div>
                     )}
                   </div>
                   <div className="ticket-item-table">
