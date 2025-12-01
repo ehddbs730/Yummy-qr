@@ -170,12 +170,9 @@ function MyTicketPage() {
   const fetchQrInfo = async (uuid, token) => {
     try {
       const headers = {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': token ? `Bearer ${token}` : ''
       };
-      
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
 
       const response = await fetch(`${API_BASE_URL}/api/qr/info?uuid=${uuid}`, {
         method: 'GET',
@@ -197,10 +194,6 @@ function MyTicketPage() {
   // 모든 티켓의 QR 이미지 로드
   const loadQrImages = async (tickets) => {
     const token = localStorage.getItem('accessToken');
-    
-    if (!token) {
-      return;
-    }
 
     if (!Array.isArray(tickets) || tickets.length === 0) {
       return;
