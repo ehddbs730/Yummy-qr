@@ -15,29 +15,6 @@ function MyTicketPage() {
 
   const EXPIRY_DURATION_MS = 24 * 60 * 60 * 1000; // 24시간
 
-  const isTicketExpired = (purchaseTime) => {
-    if (!purchaseTime) return false;
-    const purchaseDate = new Date(purchaseTime);
-    return Date.now() >= purchaseDate.getTime() + EXPIRY_DURATION_MS;
-  };
-
-  const splitTicketsByExpiry = (tickets = []) => {
-    const valid = [];
-    const expired = [];
-    tickets.forEach((ticket) => {
-      if (ticket.isUsed) {
-        expired.push(ticket);
-        return;
-      }
-      if (isTicketExpired(ticket.purchaseTime)) {
-        expired.push({ ...ticket, isExpired: true });
-      } else {
-        valid.push(ticket);
-      }
-    });
-    return { valid, expired };
-  };
-
   const dedupeTickets = (tickets = []) => {
     const map = new Map();
     tickets.forEach((ticket) => {
@@ -48,26 +25,6 @@ function MyTicketPage() {
       }
     });
     return Array.from(map.values());
-  };
-
-  // 사용자별 티켓 필터
-  const filterTicketsByUser = (tickets = [], userInfo = {}) => {
-    if (!Array.isArray(tickets)) return [];
-    const { userId, userName } = userInfo;
-
-    if (!userId && !userName) {
-      return [];
-    }
-
-    return tickets.filter(ticket => {
-      if (userId && ticket.userId) {
-        return ticket.userId === userId;
-      }
-      if (userName && ticket.userName) {
-        return ticket.userName === userName;
-      }
-      return false;
-    });
   };
 
   // 미사용 티켓 조회
@@ -89,12 +46,8 @@ function MyTicketPage() {
 
       if (response.ok) {
         const data = await response.json();
-        // 백엔드가 쿠키 기반으로 필터링해서 보내주므로 그대로 사용
-        const { valid, expired } = splitTicketsByExpiry(data || []);
-        setUnusedTickets(valid);
-        if (expired.length > 0) {
-          setExpiredTickets((prev) => dedupeTickets([...prev, ...expired]));
-        }
+        // 백엔드가 미사용 티켓만 필터링해서 보냄
+        setUnusedTickets(dedupeTickets(data || []));
       } else if (response.status === 401) {
         setError('로그인이 필요합니다.');
       } else {
