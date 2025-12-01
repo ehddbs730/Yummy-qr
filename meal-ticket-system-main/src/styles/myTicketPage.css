@@ -114,11 +114,7 @@ body, html, #root {
   align-items: center; 
   justify-content: center; 
   margin: 0 0 16px 0; 
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 16px;
-}
-.ticket-card-qr:hover {
-  transform: scale(1.02);
 }
 .ticket-card-qr .ticket-qr-placeholder { 
   width: 150px; 
