@@ -30,9 +30,19 @@ function Navbar() {
   };
 
   const handleLogout = async () => {
-
     const token = localStorage.getItem('accessToken');
     
+    // 먼저 localStorage 정리
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
+    setUserName('');
+    setUserRole('');
+    
+    // 로그인 페이지로 즉시 이동
+    navigate('/');
+    
+    // 백엔드 로그아웃 API 호출 (비동기, 실패해도 무시)
     try {
       const headers = {
         'Content-Type': 'application/json',
@@ -48,10 +58,8 @@ function Navbar() {
         credentials: 'include'
       });
     } catch (err) {
-      // 에러 우시
+      // 에러 무시
     }
-    
-    clearLocalStorage();
   };
 
   // 현재 경로가 해당 링크와 일치하는지 확인하는 함수
