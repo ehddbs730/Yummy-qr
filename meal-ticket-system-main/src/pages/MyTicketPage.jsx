@@ -441,16 +441,7 @@ function MyTicketPage() {
               
               return (
                 <div key={ticket.id} className="ticket-item">
-                  <div 
-                    className="ticket-card-qr" 
-                    onClick={() => {
-                      if (shouldShowQR && qrImageUrl) {
-                        window.open(qrImageUrl, '_blank');
-                      }
-                    }}
-                    style={{ cursor: (shouldShowQR && qrImageUrl) ? 'pointer' : 'default', position: 'relative', zIndex: 10 }}
-                    title={shouldShowQR ? "클릭하여 QR 코드 이미지 보기" : ""}
-                  >
+                  <div className="ticket-card-qr">
                     {shouldShowQR && qrImageUrl ? (
                       <img 
                         src={qrImageUrl} 
@@ -460,8 +451,7 @@ function MyTicketPage() {
                           width: '261px', 
                           height: '261px',
                           borderRadius: '16px',
-                          objectFit: 'contain',
-                          pointerEvents: 'none'
+                          objectFit: 'contain'
                         }}
                       />
                     ) : (
