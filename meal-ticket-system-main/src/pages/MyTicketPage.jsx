@@ -13,7 +13,7 @@ function MyTicketPage() {
   const [qrImages, setQrImages] = useState({}); // qrCode -> imageUrl 매핑
   const [receivingTicket, setReceivingTicket] = useState(null); // 수령 처리 중인 티켓 ID
 
-  const EXPIRY_DURATION_MS = 24 * 60 * 60 * 1000; // 24시간
+  const EXPIRY_DURATION_MS = 24 * 60 * 60 * 1000; // 만료 시간(24시간)
 
   // 미사용 티켓 조회
   const fetchUnusedTickets = async (token) => {
@@ -68,10 +68,10 @@ function MyTicketPage() {
       } else if (response.status === 401) {
         setError('로그인이 필요합니다.');
       } else {
-        setUsedTickets([]);
+        setError('사용한 티켓을 불러오는데 실패했습니다.');
       }
     } catch (err) {
-      setUsedTickets([]);
+      setError('네트워크 오류가 발생했습니다.');
     }
   };
 
@@ -98,10 +98,10 @@ function MyTicketPage() {
       } else if (response.status === 401) {
         setError('로그인이 필요합니다.');
       } else {
-        setExpiredTickets([]);
+        setError('만료된 티켓을 불러오는데 실패했습니다.');
       }
     } catch (err) {
-      setExpiredTickets([]);
+      setError('네트워크 오류가 발생했습니다.');
     }
   };
 
@@ -218,8 +218,7 @@ function MyTicketPage() {
       setError('');
       const token = localStorage.getItem('accessToken');
 
-      // 쿠키 기반 인증으로 작동하므로 token 체크 제거
-      // 백엔드가 쿠키로 사용자 확인
+      // 쿠키로 사용자 확인
       await Promise.all([
         fetchUnusedTickets(token),
         fetchUsedTickets(token),
