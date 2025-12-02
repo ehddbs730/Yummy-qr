@@ -109,6 +109,9 @@ function AdminMenuManage() {
 
         const response = await fetch(`${API_BASE_URL}/api/admin/menu/${editingMenu.id}`, {
           method: 'PATCH',
+          headers: {
+            'Authorization': localStorage.getItem('accessToken') || ''
+          },
           body: formData
         });
 
@@ -217,6 +220,9 @@ function AdminMenuManage() {
       
       const response = await fetch(`${API_BASE_URL}/api/admin/menu/${id}`, {
         method: 'PATCH',
+        headers: {
+          'Authorization': localStorage.getItem('accessToken') || ''
+        },
         body: formData
       });
 
