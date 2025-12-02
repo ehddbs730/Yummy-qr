@@ -264,7 +264,7 @@ function MyTicketPage() {
   const getExpiryTime = (purchaseTime) => {
     if (!purchaseTime) return '-';
     const purchase = new Date(purchaseTime);
-    const expiry = new Date(purchase.getTime() + 24 * 60 * 60 * 1000);
+    const expiry = new Date(purchase.getTime() + EXPIRY_DURATION_MS);
     return formatDate(expiry);
   };
 

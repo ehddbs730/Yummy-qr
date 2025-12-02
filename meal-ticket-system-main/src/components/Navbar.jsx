@@ -19,16 +19,6 @@ function Navbar() {
     setUserRole(storedUserRole || '');
   }, [location.pathname]);
 
-  const clearLocalStorage = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userRole');
-    setUserName('');
-    setUserRole('');
-    navigate('/');
-  };
-
   const handleLogout = async () => {
     const token = localStorage.getItem('accessToken');
     
