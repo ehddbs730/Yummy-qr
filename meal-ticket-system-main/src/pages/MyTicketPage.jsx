@@ -176,12 +176,17 @@ function MyTicketPage() {
     setReceivingTicket(ticketId);
 
     try {
+      const headers = {
+        'Content-Type': 'application/json'
+      };
+      
+      if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/tickets/${ticketId}/receive`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': token ? `Bearer ${token}` : ''
-        },
+        headers: headers,
         credentials: 'include'
       });
 
