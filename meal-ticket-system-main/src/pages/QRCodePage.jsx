@@ -222,7 +222,7 @@ function QRCodePage() {
                   playsInline
                   className="camera-video"
                 />
-                <canvas ref={canvasRef} style={{ display: 'none' }} />
+                <canvas ref={canvasRef} className="canvas-hidden" />
                 <button className="camera-stop-btn" onClick={stopCamera}>
                   카메라 종료
                 </button>

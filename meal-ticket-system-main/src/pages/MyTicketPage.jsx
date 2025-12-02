@@ -15,18 +15,6 @@ function MyTicketPage() {
 
   const EXPIRY_DURATION_MS = 24 * 60 * 60 * 1000; // 24시간
 
-  const dedupeTickets = (tickets = []) => {
-    const map = new Map();
-    tickets.forEach((ticket) => {
-      if (!ticket) return;
-      const key = ticket.id ?? ticket.qrCode ?? `${ticket.menuName}-${ticket.purchaseTime}`;
-      if (!map.has(key)) {
-        map.set(key, ticket);
-      }
-    });
-    return Array.from(map.values());
-  };
-
   // 미사용 티켓 조회
   const fetchUnusedTickets = async (token) => {
     try {
@@ -46,8 +34,7 @@ function MyTicketPage() {
 
       if (response.ok) {
         const data = await response.json();
-        // 백엔드가 미사용 티켓만 필터링해서 보냄
-        setUnusedTickets(dedupeTickets(data || []));
+        setUnusedTickets(data || []);
       } else if (response.status === 401) {
         setError('로그인이 필요합니다.');
       } else {
@@ -107,8 +94,7 @@ function MyTicketPage() {
 
       if (response.ok) {
         const data = await response.json();
-        // 백엔드가 쿠키 기반으로 필터링해서 보내주므로 그대로 사용
-        setExpiredTickets((prev) => dedupeTickets([...prev, ...(data || [])]));
+        setExpiredTickets(data || []);
       } else if (response.status === 401) {
         setError('로그인이 필요합니다.');
       } else {
@@ -298,7 +284,7 @@ function MyTicketPage() {
         <Navbar />
         <div className="my-ticket-container">
           <h1 className="my-ticket-title">MY식권</h1>
-          <div style={{ textAlign: 'center', padding: '50px', color: '#666' }}>
+          <div className="loading-message">
             로딩 중...
           </div>
         </div>
@@ -314,7 +300,7 @@ function MyTicketPage() {
         <Navbar />
         <div className="my-ticket-container">
           <h1 className="my-ticket-title">MY식권</h1>
-          <div style={{ textAlign: 'center', padding: '50px', color: '#ff4444' }}>
+          <div className="error-message-container">
             {error}
           </div>
         </div>
@@ -354,7 +340,7 @@ function MyTicketPage() {
 
         {/* 에러 메시지 */}
         {error && (
-          <div style={{ textAlign: 'center', padding: '20px', color: '#ff4444' }}>
+          <div className="error-message-inline">
             {error}
           </div>
         )}
@@ -393,12 +379,7 @@ function MyTicketPage() {
                         src={qrImageUrl} 
                         alt="QR Code"
                         crossOrigin="anonymous"
-                        style={{ 
-                          width: '261px', 
-                          height: '261px',
-                          borderRadius: '16px',
-                          objectFit: 'contain'
-                        }}
+                        className="ticket-qr-image"
                       />
                     ) : (
                       <div className="ticket-qr-placeholder">{qrPlaceholderText}</div>

@@ -100,6 +100,31 @@ body, html, #root {
   grid-column: 1 / -1;
 }
 
+.loading-message {
+  text-align: center;
+  padding: 50px;
+  color: #666;
+}
+
+.error-message-container {
+  text-align: center;
+  padding: 50px;
+  color: #ff4444;
+}
+
+.error-message-inline {
+  text-align: center;
+  padding: 20px;
+  color: #ff4444;
+}
+
+.ticket-qr-image {
+  width: 261px;
+  height: 261px;
+  border-radius: 16px;
+  object-fit: contain;
+}
+
 .ticket-item {
   background: #fff;
   border: 1px solid #bcd2ee;
