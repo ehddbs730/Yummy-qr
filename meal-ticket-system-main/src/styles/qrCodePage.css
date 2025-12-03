@@ -108,11 +108,21 @@ body, html, #root {
   color: white;
 }
 
+.camera-start-btn:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
 .camera-stop-btn {
   background: #f44336;
   color: white;
   padding: 10px 20px;
   font-size: 0.95rem;
+}
+
+.camera-stop-btn:hover {
+  background: #da190b;
+  transform: scale(1.05);
 }
 
 /* 입력 영역 */
@@ -148,6 +158,11 @@ body, html, #root {
   background: #2196F3;
   color: white;
   padding: 12px 25px;
+}
+
+.qr-code-submit-btn:hover:not(:disabled) {
+  background: #0b7dda;
+  transform: scale(1.05);
 }
 
 .qr-code-submit-btn:disabled {
@@ -227,6 +242,11 @@ body, html, #root {
   background: #ff9800;
   color: white;
   margin-top: 10px;
+}
+
+.rescan-btn:hover {
+  background: #e68900;
+  transform: scale(1.05);
 }
 
 @keyframes slideIn {
