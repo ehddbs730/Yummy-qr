@@ -26,6 +26,8 @@ function Navbar() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userName');
     localStorage.removeItem('userRole');
+    localStorage.removeItem('userId');
+
     setUserName('');
     setUserRole('');
     
