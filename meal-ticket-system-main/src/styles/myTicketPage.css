@@ -76,10 +76,6 @@ body, html, #root {
   box-shadow: none;
 }
 
-.ticket-tab-btn:hover:not(.active) {
-  background: #e0e0e0;
-}
-
 .ticket-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 350px);
@@ -238,12 +234,6 @@ body, html, #root {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.ticket-receive-btn:hover:not(:disabled) {
-  background: #3d4bc7;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(75, 90, 228, 0.3);
 }
 
 .ticket-receive-btn:active:not(:disabled) {
